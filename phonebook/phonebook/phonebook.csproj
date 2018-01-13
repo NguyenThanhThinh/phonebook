@@ -177,6 +177,7 @@
     <Compile Include="ViewModels\Account\AccountProfileViewModel.cs" />
     <Compile Include="ViewModels\Account\AccountRegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
+    <Compile Include="ViewModels\BaseListViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
