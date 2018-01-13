@@ -1,9 +1,14 @@
 ﻿<!DOCTYPE html>
+@using phonebook.Services;
+
+@{ 
+    var app = "Pet Project";
+}
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - @app</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -20,10 +25,24 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (!AuthenticationService.IsLogged)
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                    }
+                    else
+                    {
+                        if (AuthenticationService.LoggedUser.IsAdmin)
+                        {
+                            <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                        }
+                        <li>@Html.ActionLink("Contacts", "Index", "Contacts")</li>
+                        <li>@Html.ActionLink("Groups", "Index", "Groups")</li>
+                        <li>@Html.ActionLink("My Profile", "MyProfile", "Account")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                    }
                 </ul>
+
             </div>
         </div>
     </div>
@@ -31,7 +50,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year -@app</p>
         </footer>
     </div>
 
