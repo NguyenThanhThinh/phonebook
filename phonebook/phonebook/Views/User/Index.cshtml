@@ -14,7 +14,7 @@
     @Html.ActionLink("Create New", "CreateEdit")
 </p>
 
-@using (Html.BeginForm("Index", "Users", FormMethod.Get))
+@using (Html.BeginForm("Index", "User", FormMethod.Get))
 {
     <p>
         Search: @Html.TextBox("SearchString", Model.SearchString as string)
