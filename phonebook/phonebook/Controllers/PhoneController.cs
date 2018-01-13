@@ -15,6 +15,16 @@ namespace phonebook.Controllers
     [Authenticate]
     public class PhoneController : Controller
     {
+        private readonly ContactRepository contactRepo;
+
+        private readonly PhoneRepository phoneRepo;
+
+        public PhoneController()
+        {
+            contactRepo = new ContactRepository();
+
+            phoneRepo = new PhoneRepository();
+        }
         // Get contact by id if contact's user is logged in
         private Contact GetUserContact(int contactId)
         {
@@ -33,7 +43,7 @@ namespace phonebook.Controllers
             return contact != null;
         }
 
-           
+
 
         public ActionResult Index(int? id) //contactID
         {
@@ -61,7 +71,7 @@ namespace phonebook.Controllers
         {
             if (id != null)
             {
-                PhoneRepository phoneRepo = new PhoneRepository();
+
 
                 Phone phone = phoneRepo.GetById(id.Value);
 
@@ -98,7 +108,7 @@ namespace phonebook.Controllers
 
             if (id > 0) // Edit
             {
-                PhoneRepository phoneRepo = new PhoneRepository();
+              
 
                 Phone phone = phoneRepo.GetById(id.Value);
 
@@ -139,8 +149,6 @@ namespace phonebook.Controllers
 
             Phone phone;
 
-            PhoneRepository phoneRepo = new PhoneRepository();
-
             if (model.Id > 0) // Edit
             {
                 phone = phoneRepo.GetById(model.Id);
@@ -170,8 +178,7 @@ namespace phonebook.Controllers
         {
             if (id != null)
             {
-                PhoneRepository phoneRepo = new PhoneRepository();
-
+               
                 Phone phone = phoneRepo.GetById(id.Value);
 
                 if (phone != null && CheckIfContactsUserIsLogged(phone))
@@ -196,7 +203,6 @@ namespace phonebook.Controllers
         {
             if (id != null)
             {
-                PhoneRepository phoneRepo = new PhoneRepository();
 
                 Phone phone = phoneRepo.GetById(id.Value);
 
