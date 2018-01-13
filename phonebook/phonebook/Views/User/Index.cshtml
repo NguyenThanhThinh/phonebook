@@ -2,94 +2,127 @@
 @using phonebook.ViewModels.Users
 @model UserListViewModel
 
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 
 @{
-    ViewBag.Title = "Users";
+    ViewBag.Title = "User";
+    int No = 1;
+    const string controller = "User";
+    var users = Model.PagedUsers;
 }
 
-<h2>Users</h2>
 
-<p>
-    @Html.ActionLink("Create New", "CreateEdit")
-</p>
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">@Icon.fa("home")</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
 
-@using (Html.BeginForm("Index", "User", FormMethod.Get))
-{
-    <p>
-        Search: @Html.TextBox("SearchString", Model.SearchString as string)
-        <input type="submit" value="Filter" />
-    </p>
-}
-<table class="table">
-    <tr>
-        <th>
-            @{
-             
+<div class="panel panel-primary">
 
-                Model.RouteDictionary["SortOrder"] = Model.SortOrder == null || Model.SortOrder != UserSorting.FirstNameAsc ? UserSorting.FirstNameAsc : UserSorting.FirstNameDesc;
-                @Html.ActionLink("First Name", "Index", Model.RouteDictionary)
-            }
-        </th>
-        <th>
-            @{
-                Model.RouteDictionary["SortOrder"] = Model.SortOrder != UserSorting.LastNameAsc ? UserSorting.LastNameAsc : UserSorting.LastNameDesc;
-                @Html.ActionLink("Last Name", "Index", Model.RouteDictionary)
-            }
-        </th>
-        <th>
-            @{
-                Model.RouteDictionary["SortOrder"] = Model.SortOrder != UserSorting.UsernameAsc ? UserSorting.UsernameAsc : UserSorting.UsernameDesc;
-                @Html.ActionLink("Username", "Index", Model.RouteDictionary)
-            }
-        </th>
-        <th>
-            @{
-                Model.RouteDictionary["SortOrder"] = Model.SortOrder != UserSorting.EmailAsc ? UserSorting.EmailAsc : UserSorting.EmailDesc;
-                @Html.ActionLink("Email", "Index", Model.RouteDictionary)
-            }
-        </th>
-        <th>
-            Admin
-        </th>
-        <th>
-        </th>
-    </tr>
+    <div class="panel-heading">
+        <a href="@Url.Action("CreateEdit", controller)" class="btn btn-primary">@Icon.fa("plus") Add</a>
+    </div>
 
-    @foreach (var item in Model.PagedUsers)
+    @using (Html.BeginForm("Index", "User", FormMethod.Get))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAdmin)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "CreateEdit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
-                @if (phonebook.Services.AuthenticationService.LoggedUser.Id != item.Id)
-                {
-                    @Html.Raw("| ") @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                }
-            </td>
-        </tr>
+        <div class="row search">
+            <div class="col-md-12">
+                <strong>Search:</strong>
+                @Html.TextBox("SearchString", Model.SearchString as string, new { @class = "form-control" })
+                <input type="submit" value="Filter" class="btn btn-primary btn__search" />
+            </div>
+        </div>
     }
+    <div class="panel-body">
+        <table class="table-hover table-striped">
+            <colgroup>
+                <col style="width: 50px;" />
+                <col />
+                <col style="width: 200px;" />
+                <col style="width: 200px;" />
+                <col style="width: 200px;" />
+                <col style="width: 200px;" />
+                <col style="width: 100px;" />
+                <col style="width: 100px;" />
+                <col style="width: 100px;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        @{
 
-</table>
+
+                            Model.RouteDictionary["SortOrder"] = Model.SortOrder == null || Model.SortOrder != UserSorting.FirstNameAsc ? UserSorting.FirstNameAsc : UserSorting.FirstNameDesc;
+                            @Html.ActionLink("First Name", "Index", Model.RouteDictionary)
+                        }
+                    </th>
+                    <th>
+                        @{
+                            Model.RouteDictionary["SortOrder"] = Model.SortOrder != UserSorting.LastNameAsc ? UserSorting.LastNameAsc : UserSorting.LastNameDesc;
+                            @Html.ActionLink("Last Name", "Index", Model.RouteDictionary)
+                        }
+                    </th>
+                    <th>
+                        @{
+                            Model.RouteDictionary["SortOrder"] = Model.SortOrder != UserSorting.UsernameAsc ? UserSorting.UsernameAsc : UserSorting.UsernameDesc;
+                            @Html.ActionLink("Username", "Index", Model.RouteDictionary)
+                        }
+                    </th>
+                    <th>
+                        @{
+                            Model.RouteDictionary["SortOrder"] = Model.SortOrder != UserSorting.EmailAsc ? UserSorting.EmailAsc : UserSorting.EmailDesc;
+                            @Html.ActionLink("Email", "Index", Model.RouteDictionary)
+                        }
+                    </th>
+                    <th>
+                        Admin
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in users)
+                {
+                    <tr>
+                        <td>@(No++)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsAdmin)
+                        </td>
+                        <td class="text-center">
+
+                            <a href='@Url.Action("CreateEdit", controller, new { id = item.Id })' class="btn btn-primary btn-xs">@Icon.fa("edit")</a>
+                            @*@Html.ActionLink("Edit", "CreateEdit", new { id = item.Id }) |*@
+                            <a href='@Url.Action("Details", controller, new { id = item.Id })' class="btn btn-primary btn-xs">@Icon.fa("eye")</a>
+                            @if (phonebook.Services.AuthenticationService.LoggedUser.Id != item.Id)
+                            {
+                                <a  href='@Url.Action("Delete", controller, new { id = item.Id })' class="btn btn-danger btn-xs">@Icon.fa("times")</a>
+                              
+                            }
+                        </td>
+                    </tr>
+                            }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <br />
 <ul class="pagination">
     Page @(Model.PagedUsers.PageCount < Model.PagedUsers.PageNumber ? 0 : Model.PagedUsers.PageNumber) of @Model.PagedUsers.PageCount
 
-  <li>@Html.PagedListPager(Model.PagedUsers, page => Url.Action("Index", new { page, searchString = Model.SearchString, sortOrder = Model.SortOrder }))</li>
+    <li>@Html.PagedListPager(Model.PagedUsers, page => Url.Action("Index", new { page, searchString = Model.SearchString, sortOrder = Model.SortOrder }))</li>
 </ul>

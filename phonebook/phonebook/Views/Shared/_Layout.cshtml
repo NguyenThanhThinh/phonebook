@@ -9,7 +9,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - @app</title>
-    @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/css")
+        <link href="~/Content/font-awesome.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -34,10 +35,10 @@
                     {
                         if (AuthenticationService.LoggedUser.IsAdmin)
                         {
-                            <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                            <li>@Html.ActionLink("User", "Index", "User")</li>
                         }
-                        <li>@Html.ActionLink("Contacts", "Index", "Contacts")</li>
-                        <li>@Html.ActionLink("Groups", "Index", "Groups")</li>
+                        <li>@Html.ActionLink("Contact", "Index", "Contact")</li>
+                        <li>@Html.ActionLink("Group", "Index", "Group")</li>
                         <li>@Html.ActionLink("My Profile", "MyProfile", "Account")</li>
                         <li><a href="dang-xuat.html">Logout</a></li>
                     }
