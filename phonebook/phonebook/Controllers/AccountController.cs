@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 
 namespace phonebook.Controllers
@@ -14,6 +11,7 @@ namespace phonebook.Controllers
 
     public class AccountController : Controller
     {
+        
         public ActionResult Login(string RedirectUrl)
         {
             return View(new LoginViewModel
@@ -41,7 +39,7 @@ namespace phonebook.Controllers
             return View();
 
         }
-
+        [Route("dang-xuat.html")]
         public ActionResult Logout()
         {
             AuthenticationService.LogOut();
