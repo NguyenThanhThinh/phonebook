@@ -14,6 +14,7 @@ namespace phonebook.Controllers
     using System.IO;
     using phonebook.Services;
 
+    [Filters.Authorize]
     public class UserController : Controller
     {
         private readonly UserRepository userRepo;

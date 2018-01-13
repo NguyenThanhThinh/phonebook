@@ -1,0 +1,129 @@
+﻿@using PagedList.Mvc;
+@using phonebook.ViewModels.Contacts
+@model ContactListViewModel
+
+
+
+@{
+    ViewBag.Title = "Contact";
+    int No = 1;
+    const string controller = "Contact";
+    var contacts = Model.PagedContacts;
+}
+
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">@Icon.fa("home")</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<div class="panel panel-primary">
+
+    <div class="panel-heading">
+        <a href="@Url.Action("CreateEdit", controller)" class="btn btn-primary">@Icon.fa("plus") Add</a>
+    </div>
+
+    @using (Html.BeginForm("Index", controller, FormMethod.Get))
+    {
+        <div class="row search">
+            <div class="col-md-12">
+                <strong>Search:</strong>
+                @Html.TextBox("SearchString", Model.SearchString as string, new { @class = "form-control" })
+                <input type="submit" value="Filter" class="btn btn-primary btn__search" />
+            </div>
+        </div>
+    }
+    <div class="panel-body">
+        <table class="table-hover table-striped">
+            <colgroup>
+                <col style="width: 50px;" />
+                <col />
+                <col style="width: 200px;" />
+                <col style="width: 200px;" />
+                <col style="width: 200px;" />
+                <col style="width: 200px;" />
+                <col style="width: 100px;" />
+                <col style="width: 100px;" />
+                <col style="width: 100px;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        @{
+
+
+                            Model.RouteDictionary["SortOrder"] = Model.SortOrder == null || Model.SortOrder != ContactSorting.FirstNameAsc ? ContactSorting.FirstNameAsc : ContactSorting.FirstNameDesc;
+                            @Html.ActionLink("First Name", "Index", Model.RouteDictionary)
+                        }
+                    </th>
+                    <th>
+                        @{
+                            Model.RouteDictionary["SortOrder"] = Model.SortOrder != ContactSorting.LastNameAsc ? ContactSorting.LastNameAsc : ContactSorting.LastNameDesc;
+                            @Html.ActionLink("Last Name", "Index", Model.RouteDictionary)
+                        }
+                    </th>
+                    <th>
+                        @{
+                            Model.RouteDictionary["SortOrder"] = Model.SortOrder != ContactSorting.EmailAsc ? ContactSorting.EmailAsc : ContactSorting.EmailDesc;
+                            @Html.ActionLink("Email", "Index", Model.RouteDictionary)
+                        }
+                    </th>
+                    <th>
+                        Groups
+                    </th>
+                    <th>
+                        Phones
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in contacts)
+                {
+                    <tr>
+                        <td>@(No++)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @foreach (var groupItem in item.Groups)
+                {
+                                @Html.DisplayFor(Item => groupItem.Name)
+                                @Html.Raw("</br>")
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Phone", "Index", "Phone", new { id = item.Id }, null)
+                        </td>
+                        <td class="text-center">
+
+                            <a href='@Url.Action("CreateEdit", controller, new { id = item.Id })' class="btn btn-primary btn-xs">@Icon.fa("edit")</a>
+                            @*@Html.ActionLink("Edit", "CreateEdit", new { id = item.Id }) |*@
+                            <a href='@Url.Action("Details", controller, new { id = item.Id })' class="btn btn-primary btn-xs">@Icon.fa("eye")</a>
+
+                            <a href='@Url.Action("Delete", controller, new { id = item.Id })' class="btn btn-danger btn-xs">@Icon.fa("times")</a>
+
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br />
+<ul class="pagination">
+    Page @(Model.PagedContacts.PageCount < Model.PagedContacts.PageNumber ? 0 : Model.PagedContacts.PageNumber) of @Model.PagedContacts.PageCount
+
+    <li>@Html.PagedListPager(Model.PagedContacts, page => Url.Action("Index", new { page, searchString = Model.SearchString, sortOrder = Model.SortOrder }))</li>
+
+
+</ul>

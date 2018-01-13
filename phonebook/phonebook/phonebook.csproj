@@ -155,10 +155,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhoneController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filters\AuthenticateAttribute.cs" />
+    <Compile Include="Filters\AuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -185,6 +188,14 @@
     <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\BaseListViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CheckBoxListItem.cs" />
+    <Compile Include="ViewModels\Contacts\ContactCreateEditViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactListViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactSorting.cs" />
+    <Compile Include="ViewModels\Groups\GroupListViewModel.cs" />
+    <Compile Include="ViewModels\Groups\GroupsCreateEditViewModel.cs" />
+    <Compile Include="ViewModels\Phones\PhoneCreateEditViewModel.cs" />
+    <Compile Include="ViewModels\Phones\PhoneListViewModel.cs" />
     <Compile Include="ViewModels\Users\UserCreateEditViewModel.cs" />
     <Compile Include="ViewModels\Users\UserDetailsViewModel.cs" />
     <Compile Include="ViewModels\Users\UserListViewModel.cs" />
@@ -243,12 +254,17 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\CreateEdit.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Contact\CreateEdit.cshtml" />
+    <Content Include="Views\Contact\Details.cshtml" />
+    <Content Include="Views\Phone\Index.cshtml" />
+    <Content Include="Views\Phone\CreateEdit.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Group\CreateEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
-    <Folder Include="Views\Group\" />
-    <Folder Include="Views\Phone\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

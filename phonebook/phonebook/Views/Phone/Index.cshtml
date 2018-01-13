@@ -1,0 +1,73 @@
+﻿@using PagedList.Mvc;
+@using phonebook.ViewModels.Phones
+@model PhoneListViewModel
+
+
+
+@{
+    ViewBag.Title = "Phone";
+    int No = 1;
+    const string controller = "Phone";
+    var phones = Model.Entities;
+}
+
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">@Icon.fa("home")</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<div class="panel panel-primary">
+    
+    <div class="panel-heading">
+        <h2>Phones of @Model.Contact.FirstName @Model.Contact.LastName</h2>
+        <a href="@Url.Action("CreateEdit", controller,new { contactId = Model.Contact.Id })" class="btn btn-primary">@Icon.fa("plus") Add</a>
+    </div>
+
+   
+    <div class="panel-body">
+        <table class="table-hover table-striped">
+            <colgroup>
+                <col style="width: 50px;" />
+                <col />
+                <col style="width: 200px;" />
+               
+                <col style="width: 100px;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        Phone Number
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in phones)
+                {
+                    <tr>
+                        <td>@(No++)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td class="text-center">
+
+                            <a href='@Url.Action("CreateEdit", controller, new { id = item.Id })' class="btn btn-primary btn-xs">@Icon.fa("edit")</a>
+                            @*@Html.ActionLink("Edit", "CreateEdit", new { id = item.Id }) |*@
+                            <a href='@Url.Action("Details", controller, new { id = item.Id })' class="btn btn-primary btn-xs">@Icon.fa("eye")</a>
+
+                            <a href='@Url.Action("Delete", controller, new { id = item.Id })' class="btn btn-danger btn-xs">@Icon.fa("times")</a>
+
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        @Html.ActionLink("Back to Contact", "Index", "Contact")
+    </div>
+</div>
+
